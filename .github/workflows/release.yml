@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-autopi:
+    name: Release AutoPi binary
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: crazy-max/ghaction-xgo@v2
+      with:
+        xgo_version: latest
+        go_version: 1.18
+        dest: /home/runner/work/edge-identity/builds
+        targets: linux/arm, linux/arm64
+        race: false
+        v: true
+        x: true
+        ldflags: -s -w
+        buildmode: default
+        trimpath: false
