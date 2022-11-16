@@ -428,8 +428,10 @@ func (p *p11Token) Sign(label string, keyid string, hash []byte) (signature []by
 	}
 
 	if slices.Equal(recPub, ecpt) {
+		sigRSV[64] += 27
 		return sigRSV, nil
 	}
+
 	sigRSV = append(sigRS, 1)
 	recPub, err = crypto.Ecrecover(hash[:], sigRSV)
 	if err != nil {
@@ -437,6 +439,7 @@ func (p *p11Token) Sign(label string, keyid string, hash []byte) (signature []by
 	}
 
 	if slices.Equal(recPub, ecpt) {
+		sigRSV[64] += 27
 		return sigRSV, nil
 	}
 
